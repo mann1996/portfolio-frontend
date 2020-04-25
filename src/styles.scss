@@ -1,1 +1,159 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,900;1,700;1,900&family=Ubuntu+Mono:wght@400;700&display=swap");
+
+@import "./variables.scss";
+
+:root {
+  font-size: 16px;
+}
+
+* {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $grey;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+.content {
+  width: 90%;
+  margin: 1rem auto;
+}
+
+header {
+
+  width: 100vw;
+
+  background-color: $black;
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 50px;
+
+    .navbar-brand {
+      font-size: 2rem;
+      color: $white;
+      font-weight: 700;
+      font-family: "Ubuntu Mono", monospace;
+
+      span {
+        color: $primary;
+        transition: color 0.2s linear;
+      }
+
+      transition: color 0.2s linear;
+    }
+
+    .navbar-brand:hover {
+      color: $primary;
+
+      span {
+        color: $white;
+      }
+    }
+  }
+
+  .navbar-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+
+
+    .search-input {
+      height: 2rem;
+      background-color: $white;
+      color: black;
+      font-size: 1.2rem;
+      padding: 5px;
+      padding-bottom: 1px;
+      width: 85%;
+    }
+
+    .search-btn {
+      height: 2rem;
+      background-color: $primary;
+      color: $black;
+      border: none;
+      font-size: 1.2rem;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+
+  .navbar__links {
+    list-style: none;
+
+    li {
+      display: inline-block;
+      margin-left: 1.2rem;
+
+      a {
+        font-size: 1rem;
+        color: $white;
+      }
+
+      a:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  height: 50px;
+  bottom: 0;
+  width: 100vw;
+  padding: 0 5%;
+  background-color: $black;
+  font-size: 0.7rem;
+  color: $white;
+
+  .footer__links {
+    list-style: none;
+
+
+    li {
+      display: inline-block;
+      margin-left: 1rem;
+
+      a {
+        color: $white;
+        margin-right: 10px;
+      }
+
+      a:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  .copyright {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
