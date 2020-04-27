@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,900;1,700;1,900&family=Ubuntu+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Ubuntu+Mono:wght@400;700&display=swap");
 
 @import "./variables.scss";
 
@@ -36,7 +36,6 @@ input:focus {
 }
 
 header {
-
   width: 100vw;
 
   background-color: $black;
@@ -76,8 +75,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50%;
-
+    width: 40%;
 
     .search-input {
       height: 2rem;
@@ -135,14 +133,12 @@ footer {
   .footer__links {
     list-style: none;
 
-
     li {
       display: inline-block;
-      margin-left: 1rem;
+      margin-right: 1rem;
 
       a {
         color: $white;
-        margin-right: 10px;
       }
 
       a:hover {
@@ -156,4 +152,14 @@ footer {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.text-danger {
+  color: $danger;
+}
+.text-success {
+  color: $success;
+}
+.text-warning {
+  color: $warning;
 }
