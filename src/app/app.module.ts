@@ -15,6 +15,17 @@ import {
   faInfoCircle,
   faMapMarkerAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+  faInstagramSquare,
+  faLinkedin,
+  faGithubSquare,
+  faYoutubeSquare,
+  faSoundcloud,
+  faFlickr,
+  faTelegram,
+} from '@fortawesome/free-brands-svg-icons';
 import { DiscoverComponent } from './discover/discover.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -54,7 +65,16 @@ export class AppModule {
       faUserCircle,
       faSearch,
       faInfoCircle,
-      faMapMarkerAlt
+      faMapMarkerAlt,
+      faFacebookSquare,
+      faTwitterSquare,
+      faInstagramSquare,
+      faLinkedin,
+      faGithubSquare,
+      faYoutubeSquare,
+      faSoundcloud,
+      faFlickr,
+      faTelegram
     );
   }
 }
