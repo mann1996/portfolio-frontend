@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +6,12 @@ import {
   FormsModule,
   ReactiveFormsModule,
   AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
+import { of, observable, Observable } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
+import { UserService } from '../service/user.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-register',
@@ -15,16 +20,17 @@ import {
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
       {
         firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
+        lastName: [''],
         email: [
           '',
-          [Validators.required, Validators.email, this.checkValidEmail],
+          [Validators.required, Validators.email],
+          [this.checkValidEmail(this.userService)],
         ],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -37,14 +43,17 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm.value);
   }
 
-  checkValidEmail(control: AbstractControl) {
-    if (control.value) {
-      let email: string = control.value.toString();
-      if (email.length > 0 && email === 'jsprtmnn@gmail.com') {
-        return { validEmail: true };
+  checkValidEmail(us: UserService) {
+    return (control: AbstractControl) => {
+      if (control.value) {
+        const email = control.value;
+        return us
+          .validateEmail(email)
+          .pipe(map((res) => (res.emailTaken ? { emailTaken: true } : null)));
+      } else {
+        return null;
       }
-    }
-    return null;
+    };
   }
 
   confirmPasswordValidator(control: FormGroup) {

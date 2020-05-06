@@ -1,6 +1,5 @@
 @import "../../variables.scss";
 
-
 .bg {
   position: fixed;
   left: 0;
@@ -13,7 +12,7 @@
 }
 
 .bg::after {
-  content: '';
+  content: "";
   display: block;
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
@@ -35,11 +34,10 @@
   }
 }
 
-
 .login__form {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: $white;
+  background-color: $white;
+  color: $black;
   padding: 1rem;
   width: fit-content;
   border-radius: 1rem;
@@ -60,14 +58,19 @@
         display: block;
       }
 
+      label.required::after {
+        content: "*";
+        color: $danger;
+      }
+
       input {
         display: block;
         background-color: transparent;
-        border-bottom: 1px solid $white;
+        border-bottom: 1px solid $black;
         height: 2rem;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
         width: 400px;
-        color: $white;
+        color: $black;
       }
 
       input:focus {
@@ -84,9 +87,9 @@
 
     button {
       padding: 0.5rem 2rem;
-      background-color: $black;
+      background-color: $white;
       border: 2px solid $primary;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       color: $primary;
       font-size: 1.2rem;
       font-weight: 700;
@@ -96,10 +99,10 @@
 
     button:disabled {
       padding: 0.5rem 2rem;
-      background-color: $black;
-      border: 2px solid #af003d;
-      border-radius: .5rem;
-      color: #af003d;
+      background-color: $white;
+      border: 2px solid $secondary;
+      border-radius: 0.5rem;
+      color: $secondary;
       font-size: 1.2rem;
       font-weight: 700;
       cursor: default;
@@ -107,12 +110,12 @@
 
     button:hover {
       background-color: $primary;
-      color: $black;
+      color: $white;
     }
 
     button:disabled:hover {
-      background-color: $black;
-      color: #af003d;
+      background-color: $white;
+      color: $secondary;
     }
   }
 
@@ -122,11 +125,11 @@
     font-size: 0.7rem;
     width: fit-content;
     padding: 0.5rem;
-    border-top: 1px solid $white;
+    border-top: 1px solid $black;
     margin: 0 auto;
   }
 
   a:hover {
-    color: $white;
+    color: $black;
   }
 }

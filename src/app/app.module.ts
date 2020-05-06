@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
@@ -37,6 +36,8 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './service/user.service';
 
 @NgModule({
   declarations: [
@@ -53,8 +54,9 @@ import {
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [FormBuilder],
+  providers: [FormBuilder, UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
