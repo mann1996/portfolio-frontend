@@ -7,9 +7,6 @@ import {
   FaIconLibrary,
 } from '@fortawesome/angular-fontawesome';
 import {
-  faGlobeAmericas,
-  faNewspaper,
-  faUserCircle,
   faSearch,
   faInfoCircle,
   faMapMarkerAlt,
@@ -36,8 +33,11 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserService } from './service/user.service';
+import { AuthGuard } from './Guards/auth.guard';
+import { TokenInterceptorService } from './service/token-interceptor.service';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { UserService } from './service/user.service';
     ProfileComponent,
     SubscriptionComponent,
     RegisterComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,15 +57,21 @@ import { UserService } from './service/user.service';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [FormBuilder, UserService],
+  providers: [
+    FormBuilder,
+    UserService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(private library: FaIconLibrary) {
     library.addIcons(
-      faGlobeAmericas,
-      faNewspaper,
-      faUserCircle,
       faSearch,
       faInfoCircle,
       faMapMarkerAlt,

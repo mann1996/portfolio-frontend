@@ -5,19 +5,24 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { RegisterComponent } from './register/register.component';
-
+import { AuthGuard } from './Guards/auth.guard';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
   { path: '', component: DiscoverComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:userId', component: ProfileComponent },
+  {
+    path: 'profile/:userId/edit',
+    component: EditProfileComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'for-you', component: SubscriptionComponent },
-  { path: 'register', component: RegisterComponent }
-
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

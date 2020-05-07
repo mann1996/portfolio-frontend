@@ -11,7 +11,9 @@ import {
 import { of, observable, Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 import { UserService } from '../service/user.service';
-import { User } from '../model/user.model';
+import { UserRequestModel } from '../model/user-request.model';
+import { LoginModel } from '../model/login-request.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +22,11 @@ import { User } from '../model/user.model';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -40,7 +46,21 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
+    const user: UserRequestModel = this.registerForm.value;
+
+    this.userService.createUser(user).subscribe(
+      (res) => {
+        let creds: LoginModel = { email: res.email, password: user.password };
+        this.userService.loginUser(creds).subscribe(
+          (res) => {
+            this.userService.saveJwt(res);
+            this.router.navigate(['/profile']);
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
+    );
   }
 
   checkValidEmail(us: UserService) {

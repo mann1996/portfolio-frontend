@@ -5,23 +5,48 @@
         <img src="../../assets/images/profile.jpg" alt="" />
       </div>
       <div class="profile__titles">
-        <div class="profile__titles__name">jan werthwein</div>
-        <div class="profile__titles__occupation">art director</div>
-        <div class="profile__titles__company">Entertainment Tonight Canada</div>
-        <div class="profile__titles__website">
-          <a href="http://www.etcanada.com" target="_BLANK">www.etcanada.com</a>
+        <div class="profile__titles__name">
+          {{ userProfile.firstName
+          }}<span *ngIf="userProfile.lastName">{{
+            " " + userProfile.lastName
+          }}</span>
         </div>
-        <div class="profile__titles__location">
+        <div class="profile__titles__occupation" *ngIf="userProfile.jobTitle">
+          {{ userProfile.jobTitle }}
+        </div>
+        <div class="profile__titles__company" *ngIf="userProfile.company">
+          {{ userProfile.company }}
+        </div>
+        <div class="profile__titles__website">
+          <a href="http://{{ userProfile.website }}" target="_BLANK">{{
+            userProfile.website
+          }}</a>
+        </div>
+        <div class="profile__titles__location" *ngIf="userProfile.location">
           <a href="http://www.etcanada.com" target="_BLANK">
             <div><fa-icon [icon]="['fas', 'map-marker-alt']"></fa-icon></div>
-            <span>Toronto, Ontario, Canada</span>
+            <span
+              >{{ userProfile.location.state.country.name }},
+              {{ userProfile.location.state.name }},
+              {{ userProfile.location.name }}</span
+            >
           </a>
         </div>
       </div>
     </div>
-    <div class="follow__btn">
+    <div class="follow__btn" *ngIf="!userProfile.valid; else elseBlock">
       <a href="#"><span id="follow__btn__label">Follow</span></a>
     </div>
+    <ng-template #elseBlock>
+      <div class="follow__btn">
+        <a
+          href="#"
+          routerLink="{{ '/profile/' + userProfile.publicId + '/edit' }}"
+          ><span id="follow__btn__label">Edit Profile</span></a
+        >
+      </div>
+    </ng-template>
+
     <div class="user__info">
       <table>
         <tr>
@@ -75,28 +100,19 @@
       </a>
       <a href="#">
         <span class="user__social_links__icon">
-          <fa-icon [icon]="['fab', 'flickr']"></fa-icon>
-        </span>
-      </a>
-      <a href="#">
-        <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'soundcloud']"></fa-icon>
         </span>
       </a>
-      <a href="#">
-        <span class="user__social_links__icon">
-          <fa-icon [icon]="['fab', 'telegram']"></fa-icon>
-        </span>
-      </a>
     </div>
-    <div class="user__about">
-      <div class="user__about__title">About Me</div>
+    <div class="user__about" *ngIf="userProfile.customSectionContent">
+      <div class="user__about__title">{{ userProfile.customSectionTitle }}</div>
       <div class="user__about__content">
-        Art Director & Motion Graphics designer at Entertainment Tonight Canada
+        {{ userProfile.customSectionContent }}
       </div>
     </div>
-    <div class="user__join_date">
-      Member since: {{ "APRIL 26, 2015" | date: "MMMM d, y" | uppercase }}
+    <div class="user__join_date" *ngIf="userProfile.user">
+      Member since:
+      {{ userProfile.user.joinedOn | date: "MMMM d, y" | uppercase }}
     </div>
   </div>
   <div class="post__container"></div>

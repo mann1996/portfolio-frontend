@@ -3,40 +3,101 @@
     <a href="#" class="navbar-brand" routerLink="/">
       portfol<span>.</span>io
     </a>
-    <form class="navbar-form">
+    <!-- <form class="navbar-form">
       <input type="text" class="search-input" placeholder="Search...." />
       <button class="search-btn">
         <fa-icon [icon]="['fas', 'search']"></fa-icon>
       </button>
-    </form>
+    </form> -->
     <ul class="navbar__links">
       <li>
-        <a href="#" routerLink="/">
-          <span>
-            <fa-icon [icon]="['fas', 'globe-americas']"></fa-icon>
-          </span>
+        <a
+          href="#"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           Discover
         </a>
       </li>
       <li>
-        <a href="#" routerLink="/for-you">
-          <span>
-            <fa-icon [icon]="['fas', 'newspaper']"></fa-icon>
-          </span>
-          For You</a>
+        <a
+          href="#"
+          routerLink="/for-you"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          For You</a
+        >
       </li>
-      <li>
-        <a href="/login">
-          <span>
-            <fa-icon [icon]="['fas', 'user-circle']"></fa-icon>
-          </span>
-          Sign in</a>
+      <li *ngIf="!loggedInUser">
+        <a href="/login"> Sign in</a>
       </li>
-      <li>
-        <a href="/register">
-          or Sign up</a>
+      <li *ngIf="loggedInUser">
+        <a
+          href="#"
+          routerLink="/profile/{{ loggedInUser }}"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Profile</a
+        >
+      </li>
+      <li *ngIf="!loggedInUser">
+        <a href="/register"> or Sign up</a>
       </li>
     </ul>
+    <ul class="navbar__links navbar__links__icon">
+      <li>
+        <a
+          href="#"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span>
+            <fa-icon [icon]="['fas', 'search']"></fa-icon>
+          </span>
+        </a>
+      </li>
+    </ul>
+    <div class="navbar__dropdown">
+      <a
+        href="#"
+        routerLink="/profile/{{ loggedInUser }}"
+        (mouseenter)="activateMenu()"
+        class="navbar__profile_thumb"
+        *ngIf="loggedInUser"
+      >
+        <img src="../assets/images/profile.jpg" alt="profile_thumbnail" />
+      </a>
+      <div
+        (mouseleave)="activateMenu()"
+        class="navbar__dropdown__menu"
+        [ngClass]="{ navbar__dropdown__menu_active: menuActive }"
+      >
+        <div class="navbar__dropdown_header">
+          <div class="navbar__dropdown_header__thumb">
+            <img src="../assets/images/profile.jpg" alt="profile_thumbnail" />
+          </div>
+          <div class="user_details" *ngIf="userDetails">
+            <div class="user_details__name">{{ userDetails.firstName }}</div>
+            <div class="user_details__email">{{ userDetails.email }}</div>
+          </div>
+        </div>
+        <div class="navbar__dropdown_body">
+          <ul>
+            <li>
+              <a href="#" routerLink="/profile/{{ loggedInUser }}">Profile</a>
+            </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>
+        <div class="navbar__dropdown_footer">
+          <a href="#" (click)="signOut()">Sign Out</a>
+        </div>
+      </div>
+    </div>
   </nav>
 </header>
 
