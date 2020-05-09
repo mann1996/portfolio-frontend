@@ -1,5 +1,6 @@
 import { UserResponseModel } from './user-response.model';
 import { CityModel } from './city.model';
+import { NumberSymbol } from '@angular/common';
 
 export class ProfileModel {
   firstName: string;
@@ -7,7 +8,6 @@ export class ProfileModel {
   jobTitle: string;
   company: string;
   website: string;
-  location: CityModel;
   customSectionTitle: string;
   customSectionContent: string;
   instagram: string;
@@ -15,9 +15,14 @@ export class ProfileModel {
   twitter: string;
   youtube: string;
   soundcloud: string;
-  flickr: string;
-  telegram: string;
+  github: string;
+  linkedin: string;
   publicId: string;
   valid: boolean;
+  joinedOn: any;
+  followingStatus: boolean;
+  followers: number;
+  following: number;
+  thumbnail: string;
   user: UserResponseModel;
 }

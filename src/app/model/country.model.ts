@@ -3,4 +3,5 @@ export class CountryModel {
   sortname: string;
   name: string;
   phonecode: number;
+  selected: boolean = false;
 }

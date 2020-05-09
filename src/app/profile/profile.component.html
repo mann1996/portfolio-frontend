@@ -1,9 +1,11 @@
 <div class="flex__container">
   <div class="sidebar">
     <div class="profile__intro">
-      <div class="profile__img">
-        <img src="../../assets/images/profile.jpg" alt="" />
-      </div>
+      <div
+        class="profile__img"
+        *ngIf="userProfile.thumbnail"
+        [ngStyle]="{ 'background-image': 'url(' + userProfile.thumbnail + ')' }"
+      ></div>
       <div class="profile__titles">
         <div class="profile__titles__name">
           {{ userProfile.firstName
@@ -22,7 +24,7 @@
             userProfile.website
           }}</a>
         </div>
-        <div class="profile__titles__location" *ngIf="userProfile.location">
+        <!-- <div class="profile__titles__location" *ngIf="userProfile.location">
           <a href="http://www.etcanada.com" target="_BLANK">
             <div><fa-icon [icon]="['fas', 'map-marker-alt']"></fa-icon></div>
             <span
@@ -31,11 +33,19 @@
               {{ userProfile.location.name }}</span
             >
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="follow__btn" *ngIf="!userProfile.valid; else elseBlock">
-      <a href="#"><span id="follow__btn__label">Follow</span></a>
+      <a
+        href="#"
+        [ngClass]="{ active: userProfile.followingStatus }"
+        (click)="toggleFollow($event)"
+      >
+        <span id="follow__btn_label">{{
+          userProfile.followingStatus ? "Following" : "Follow"
+        }}</span>
+      </a>
     </div>
     <ng-template #elseBlock>
       <div class="follow__btn">
@@ -57,48 +67,76 @@
           <td class="user__info__stat">Likes</td>
           <td class="user__info__stat_value">5,309</td>
         </tr>
-        <tr>
+        <tr *ngIf="userProfile.followers > 0">
           <td class="user__info__stat">Followers</td>
-          <td class="user__info__stat_value">1,752</td>
+          <td class="user__info__stat_value">{{ userProfile.followers }}</td>
         </tr>
-        <tr>
+        <tr *ngIf="userProfile.following > 0">
           <td class="user__info__stat">Following</td>
-          <td class="user__info__stat_value">786</td>
+          <td class="user__info__stat_value">{{ userProfile.following }}</td>
         </tr>
       </table>
     </div>
     <div class="user__social_links">
-      <a href="#">
+      <a
+        href="{{ userProfile.facebook }}"
+        target="_BLANK"
+        *ngIf="userProfile.facebook"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'facebook-square']"></fa-icon>
         </span>
       </a>
-      <a href="#">
+      <a
+        href="{{ userProfile.twitter }}"
+        target="_BLANK"
+        *ngIf="userProfile.twitter"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'twitter-square']"></fa-icon>
         </span>
       </a>
-      <a href="#">
+      <a
+        href="{{ userProfile.instagram }}"
+        target="_BLANK"
+        *ngIf="userProfile.instagram"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'instagram-square']"></fa-icon>
         </span>
       </a>
-      <a href="#">
+      <a
+        href="{{ userProfile.youtube }}"
+        target="_BLANK"
+        *ngIf="userProfile.youtube"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'youtube-square']"></fa-icon>
         </span>
       </a>
-      <a href="#">
+      <a
+        href="{{ userProfile.github }}"
+        target="_BLANK"
+        *ngIf="userProfile.github"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'github-square']"></fa-icon>
         </span>
       </a>
-      <a href="#">
+      <a
+        href="{{ userProfile.linkedin }}"
+        target="_BLANK"
+        *ngIf="userProfile.linkedin"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'linkedin']"></fa-icon>
         </span>
       </a>
-      <a href="#">
+      <a
+        href="{{ userProfile.soundcloud }}"
+        target="_BLANK"
+        *ngIf="userProfile.soundcloud"
+      >
         <span class="user__social_links__icon">
           <fa-icon [icon]="['fab', 'soundcloud']"></fa-icon>
         </span>
@@ -110,9 +148,18 @@
         {{ userProfile.customSectionContent }}
       </div>
     </div>
-    <div class="user__join_date" *ngIf="userProfile.user">
+    <div class="user__join_date" *ngIf="userProfile.joinedOn">
       Member since:
-      {{ userProfile.user.joinedOn | date: "MMMM d, y" | uppercase }}
+      {{
+        userProfile.joinedOn[0] +
+          " " +
+          userProfile.joinedOn[1] +
+          ", " +
+          " " +
+          userProfile.joinedOn[2]
+          | date: "MMMM d, y"
+          | uppercase
+      }}
     </div>
   </div>
   <div class="post__container"></div>

@@ -41,6 +41,7 @@
   padding: 1rem;
   width: fit-content;
   border-radius: 1rem;
+  width: 400px;
   top: 50%;
   left: 60%;
   transform: translateY(-50%);
@@ -51,72 +52,6 @@
 
   form {
     padding: 1rem 0;
-
-    .input__group {
-      margin: 1rem 0;
-      label {
-        display: block;
-      }
-
-      label.required::after {
-        content: "*";
-        color: $danger;
-      }
-
-      input {
-        display: block;
-        background-color: transparent;
-        border-bottom: 1px solid $black;
-        height: 2rem;
-        margin-bottom: 0.5rem;
-        width: 400px;
-        color: $black;
-      }
-
-      input:focus {
-        border-bottom: 2px solid $primary;
-      }
-
-      .ng-valid.ng-dirty {
-        border-bottom: 2px solid $primary;
-      }
-      .ng-invalid.ng-dirty {
-        border-bottom: 2px solid $danger;
-      }
-    }
-
-    button {
-      padding: 0.5rem 2rem;
-      background-color: $white;
-      border: 2px solid $primary;
-      border-radius: 0.5rem;
-      color: $primary;
-      font-size: 1.2rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s linear;
-    }
-
-    button:disabled {
-      padding: 0.5rem 2rem;
-      background-color: $white;
-      border: 2px solid $secondary;
-      border-radius: 0.5rem;
-      color: $secondary;
-      font-size: 1.2rem;
-      font-weight: 700;
-      cursor: default;
-    }
-
-    button:hover {
-      background-color: $primary;
-      color: $white;
-    }
-
-    button:disabled:hover {
-      background-color: $white;
-      color: $secondary;
-    }
   }
 
   a {

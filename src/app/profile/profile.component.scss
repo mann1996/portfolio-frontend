@@ -21,6 +21,7 @@
         overflow: hidden;
         border-radius: 50%;
         margin: 0 auto 1rem;
+        background-size: cover;
 
         img {
           width: 100%;
@@ -76,6 +77,10 @@
         padding: 0.5rem 2rem;
         border-radius: 3px;
         transition: background-color 0.3s linear;
+      }
+
+      a.active {
+        background-color: #696969;
       }
       a:hover {
         background-color: darken($color: $primary, $amount: 10%);

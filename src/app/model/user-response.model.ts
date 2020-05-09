@@ -3,5 +3,4 @@ export class UserResponseModel {
   public firstName: string;
   public lastName: string;
   public email: string;
-  public joinedOn: Date;
 }

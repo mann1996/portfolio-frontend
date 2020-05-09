@@ -46,15 +46,21 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    const user: UserRequestModel = this.registerForm.value;
-
+    const user: UserRequestModel = new UserRequestModel();
+    user.firstName = this.registerForm.value.firstName;
+    user.lastName = this.registerForm.value.lastName;
+    user.email = this.registerForm.value.email;
+    user.password = this.registerForm.value.password;
     this.userService.createUser(user).subscribe(
-      (res) => {
-        let creds: LoginModel = { email: res.email, password: user.password };
+      (response) => {
+        let creds: LoginModel = {
+          email: response.email,
+          password: user.password,
+        };
         this.userService.loginUser(creds).subscribe(
           (res) => {
             this.userService.saveJwt(res);
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/profile/' + response.publicId]);
           },
           (error) => console.log(error)
         );

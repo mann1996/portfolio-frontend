@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 import {
   FontAwesomeModule,
   FaIconLibrary,
@@ -38,6 +39,9 @@ import { UserService } from './service/user.service';
 import { AuthGuard } from './Guards/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { LocationService } from './service/location.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -56,10 +60,13 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
   ],
   providers: [
     FormBuilder,
     UserService,
+    LocationService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

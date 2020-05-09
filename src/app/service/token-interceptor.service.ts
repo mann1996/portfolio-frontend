@@ -15,6 +15,14 @@ export class TokenInterceptorService implements HttpInterceptor {
         Authorization: `Bearer ${us.getToken()}`,
       },
     });
+    if (req.url.match(/update\/profile/)) {
+      tokinzedReq = req.clone({
+        setHeaders: {
+          'Content-type': `application/json-patch+json`,
+          Authorization: `Bearer ${us.getToken()}`,
+        },
+      });
+    }
     return next.handle(tokinzedReq);
   }
 }

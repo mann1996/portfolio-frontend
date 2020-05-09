@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Email } from '../model/email.model';
 import { UserRequestModel } from '../model/user-request.model';
@@ -63,5 +63,17 @@ export class UserService {
 
   getUserProfile(userId: string): Observable<ProfileModel> {
     return this.http.get<ProfileModel>(this.hostUrl + 'profile/' + userId);
+  }
+
+  saveProfile(value, userId: string) {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers.append('Content-type', 'application/json-patch');
+    return this.http.patch(this.hostUrl + 'update/profile/' + userId, value, {
+      headers: headers,
+    });
+  }
+
+  toggleFollow(userId: string) {
+    return this.http.get(this.hostUrl + 'add/follower/' + userId);
   }
 }

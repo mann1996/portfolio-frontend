@@ -60,28 +60,35 @@
         </a>
       </li>
     </ul>
-    <div class="navbar__dropdown">
+    <div class="navbar__dropdown" *ngIf="loggedInUser">
       <a
         href="#"
         routerLink="/profile/{{ loggedInUser }}"
         (mouseenter)="activateMenu()"
         class="navbar__profile_thumb"
-        *ngIf="loggedInUser"
+        *ngIf="userDetails"
+        [ngStyle]="{
+          'background-image': 'url(' + userDetails.thumbnail + ')'
+        }"
       >
-        <img src="../assets/images/profile.jpg" alt="profile_thumbnail" />
+        <!-- <img src="../assets/images/profile.jpg" alt="profile_thumbnail" /> -->
       </a>
       <div
         (mouseleave)="activateMenu()"
         class="navbar__dropdown__menu"
         [ngClass]="{ navbar__dropdown__menu_active: menuActive }"
+        *ngIf="userDetails"
       >
         <div class="navbar__dropdown_header">
-          <div class="navbar__dropdown_header__thumb">
-            <img src="../assets/images/profile.jpg" alt="profile_thumbnail" />
-          </div>
+          <div
+            class="navbar__dropdown_header__thumb"
+            [ngStyle]="{
+              'background-image': 'url(' + userDetails.thumbnail + ')'
+            }"
+          ></div>
           <div class="user_details" *ngIf="userDetails">
             <div class="user_details__name">{{ userDetails.firstName }}</div>
-            <div class="user_details__email">{{ userDetails.email }}</div>
+            <div class="user_details__email">{{ userDetails.user.email }}</div>
           </div>
         </div>
         <div class="navbar__dropdown_body">

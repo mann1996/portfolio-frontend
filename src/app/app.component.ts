@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './service/user.service';
 import { UserResponseModel } from './model/user-response.model';
 import { Router } from '@angular/router';
+import { ProfileModel } from './model/profile.model';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   loggedInUser: string;
-  userDetails: UserResponseModel;
+  userDetails: ProfileModel;
   title = 'portfolio-frontend';
   menuActive = false;
   constructor(private userService: UserService, private router: Router) {}
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if (this.userService.loggedIn()) {
       this.loggedInUser = this.userService.getUserId();
-      this.userService.getUser(this.loggedInUser).subscribe(
+      this.userService.getUserProfile(this.loggedInUser).subscribe(
         (response) => (this.userDetails = response),
         (error) => console.log(error)
       );
