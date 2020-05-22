@@ -12,6 +12,7 @@ import { debounceTime, map, finalize } from 'rxjs/operators';
 import { CountryModel } from '../model/country.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { DataService } from '../service/data.service';
+import { FileUploadService } from '../service/file-upload.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -28,6 +29,7 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private fileUpload: FileUploadService,
     private data: DataService,
     private route: ActivatedRoute,
     private storage: AngularFireStorage
@@ -74,31 +76,20 @@ export class EditProfileComponent implements OnInit {
       var filePath = `${'profile_thumbs'}/${
         this.userId
       }_${new Date().getTime()}`;
-      const fileRef = this.storage.ref(filePath);
-      this.storage
-        .upload(filePath, this.selectedImage)
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe((url) => {
-              let data = [
-                {
-                  op: 'replace',
-                  path: '/thumbnail',
-                  value: url,
-                },
-              ];
-              this.userService
-                .saveProfile(data, this.userId)
-                .subscribe((success) => {
-                  this.status = 'Your changes have been saved';
-                  this.profileModel.thumbnail = url;
-                  this.data.updateProfile(this.profileModel);
-                });
-            });
-          })
-        )
-        .subscribe();
+      this.status = 'Saving changes...';
+      this.fileUpload.uploadFile(filePath, this.selectedImage).then((url) => {
+        let data = [
+          {
+            op: 'replace',
+            path: '/thumbnail',
+            value: url,
+          },
+        ];
+        this.userService.saveProfile(data, this.userId).subscribe((profile) => {
+          this.status = 'Your changes have been saved';
+          this.data.updateProfile(profile);
+        });
+      });
     } else {
       this.imgSrc = this.profileModel.thumbnail;
       this.selectedImage = null;
@@ -120,9 +111,10 @@ export class EditProfileComponent implements OnInit {
           ];
           this.userService
             .saveProfile(data, this.userId)
-            .subscribe(
-              (success) => (this.status = 'Your changes have been saved')
-            );
+            .subscribe((profile) => {
+              this.status = 'Your changes have been saved';
+              this.data.updateProfile(profile);
+            });
         }
       });
     }

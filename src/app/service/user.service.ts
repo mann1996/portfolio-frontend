@@ -65,12 +65,16 @@ export class UserService {
     return this.http.get<ProfileModel>(this.hostUrl + 'profile/' + userId);
   }
 
-  saveProfile(value, userId: string) {
+  saveProfile(value, userId: string): Observable<ProfileModel> {
     let headers: HttpHeaders = new HttpHeaders();
     headers.append('Content-type', 'application/json-patch');
-    return this.http.patch(this.hostUrl + 'update/profile/' + userId, value, {
-      headers: headers,
-    });
+    return this.http.patch<ProfileModel>(
+      this.hostUrl + 'update/profile/' + userId,
+      value,
+      {
+        headers: headers,
+      }
+    );
   }
 
   toggleFollow(userId: string) {

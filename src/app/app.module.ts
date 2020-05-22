@@ -49,6 +49,8 @@ import { SearchComponent } from './search/search.component';
 import { SearchPostComponent } from './search-post/search-post.component';
 import { SearchPeopleComponent } from './search-people/search-people.component';
 import { DataService } from './service/data.service';
+import { PostEditorComponent } from './post-editor/post-editor.component';
+import { FileUploadService } from './service/file-upload.service';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { DataService } from './service/data.service';
     SearchComponent,
     SearchPostComponent,
     SearchPeopleComponent,
+    PostEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +79,7 @@ import { DataService } from './service/data.service';
   providers: [
     FormBuilder,
     UserService,
+    FileUploadService,
     LocationService,
     DataService,
     AuthGuard,
