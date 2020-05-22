@@ -7,11 +7,22 @@ import { SubscriptionComponent } from './subscription/subscription.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './Guards/auth.guard';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { SearchComponent } from './search/search.component';
+import { SearchPostComponent } from './search-post/search-post.component';
+import { SearchPeopleComponent } from './search-people/search-people.component';
 
 const routes: Routes = [
   { path: '', component: DiscoverComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile/:userId', component: ProfileComponent },
+  {
+    path: 'search',
+    component: SearchComponent,
+    children: [
+      { path: 'post', component: SearchPostComponent },
+      { path: 'people', component: SearchPeopleComponent },
+    ],
+  },
   {
     path: 'profile/:userId/edit',
     component: EditProfileComponent,

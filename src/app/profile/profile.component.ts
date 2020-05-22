@@ -19,17 +19,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     let userId = this.route.snapshot.paramMap.get('userId');
-    this.userService.getUserProfile(userId).subscribe(
-      (response) => {
-        if (response) {
-          this.userProfile = response;
-        }
-      },
-      (error) => {
-        this.userService.clearJwt();
-        this.router.navigate(['/login']);
+    this.userService.getUserProfile(userId).subscribe((response) => {
+      if (response) {
+        this.userProfile = response;
       }
-    );
+    });
   }
 
   toggleFollow(event) {

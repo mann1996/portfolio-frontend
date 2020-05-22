@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { debounceTime, map, finalize } from 'rxjs/operators';
 import { CountryModel } from '../model/country.model';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -27,6 +28,7 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private data: DataService,
     private route: ActivatedRoute,
     private storage: AngularFireStorage
   ) {}
@@ -90,7 +92,8 @@ export class EditProfileComponent implements OnInit {
                 .saveProfile(data, this.userId)
                 .subscribe((success) => {
                   this.status = 'Your changes have been saved';
-                  window.location.reload();
+                  this.profileModel.thumbnail = url;
+                  this.data.updateProfile(this.profileModel);
                 });
             });
           })

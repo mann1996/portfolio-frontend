@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from './service/user.service';
 import { UserResponseModel } from './model/user-response.model';
 import { Router } from '@angular/router';
 import { ProfileModel } from './model/profile.model';
+import { DataService } from './service/data.service';
 
 @Component({
   selector: 'app-root',
@@ -14,16 +15,17 @@ export class AppComponent implements OnInit {
   userDetails: ProfileModel;
   title = 'portfolio-frontend';
   menuActive = false;
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private data: DataService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    if (this.userService.loggedIn()) {
-      this.loggedInUser = this.userService.getUserId();
-      this.userService.getUserProfile(this.loggedInUser).subscribe(
-        (response) => (this.userDetails = response),
-        (error) => console.log(error)
-      );
-    }
+    this.data.currentProfile.subscribe((profile) => {
+      this.userDetails = profile;
+      this.loggedInUser = profile.publicId;
+    });
   }
 
   activateMenu() {

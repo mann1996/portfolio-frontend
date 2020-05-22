@@ -11,7 +11,10 @@ import {
   faSearch,
   faInfoCircle,
   faMapMarkerAlt,
+  faThumbsUp,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import {
   faFacebookSquare,
   faTwitterSquare,
@@ -42,6 +45,10 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { LocationService } from './service/location.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { SearchComponent } from './search/search.component';
+import { SearchPostComponent } from './search-post/search-post.component';
+import { SearchPeopleComponent } from './search-people/search-people.component';
+import { DataService } from './service/data.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +59,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     SubscriptionComponent,
     RegisterComponent,
     EditProfileComponent,
+    SearchComponent,
+    SearchPostComponent,
+    SearchPeopleComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +77,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     FormBuilder,
     UserService,
     LocationService,
+    DataService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
@@ -90,7 +101,10 @@ export class AppModule {
       faYoutubeSquare,
       faSoundcloud,
       faFlickr,
-      faTelegram
+      faTelegram,
+      faThumbsUp,
+      faEye,
+      faPlusSquare
     );
   }
 }

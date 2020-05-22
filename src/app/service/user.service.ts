@@ -76,4 +76,8 @@ export class UserService {
   toggleFollow(userId: string) {
     return this.http.get(this.hostUrl + 'add/follower/' + userId);
   }
+
+  searchUser(key: string): Observable<ProfileModel[]> {
+    return this.http.get<ProfileModel[]>(this.hostUrl + 'search?key=' + key);
+  }
 }
