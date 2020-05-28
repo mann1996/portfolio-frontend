@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProfileModel } from '../model/profile.model';
 import { UserService } from '../service/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PostResponseModel } from '../model/post-response.model';
+import { PostService } from '../service/post.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,8 +13,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ProfileComponent implements OnInit {
   userProfile: ProfileModel = new ProfileModel();
   following: boolean = false;
+  publicPosts: PostResponseModel[] = [];
   constructor(
     private userService: UserService,
+    private postService: PostService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -20,9 +24,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     let userId = this.route.snapshot.paramMap.get('userId');
     this.userService.getUserProfile(userId).subscribe((response) => {
-      if (response) {
-        this.userProfile = response;
-      }
+      this.userProfile = response;
+      this.postService
+        .findPublicPostsByUser(userId)
+        .subscribe((posts) => (this.publicPosts = posts));
     });
   }
 

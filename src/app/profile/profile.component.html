@@ -164,8 +164,34 @@
   </div>
   <div class="post__container">
     <div class="post__grid row">
-      <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12 post__card">
-        <a class="post__card__thumbnail"></a>
+      <div
+        class="col col-lg-4 col-md-6 col-sm-12 col-xs-12 post__card"
+        *ngFor="let post of publicPosts"
+      >
+        <div
+          class="post__card__thumbnail"
+          [ngStyle]="{ 'background-image': 'url(' + post.thumbnail + ')' }"
+        >
+          <a href="#" class="post__action action__edit">Edit Post</a>
+          <button class="post__action action__delete">Delete Post</button>
+
+          <div class="post__card__details">
+            <div class="post__card__details_info">
+              <a href="#" class="info__title">Title</a>
+              <a href="#" class="info__author">author</a>
+            </div>
+            <div class="post__card__details_stats">
+              <span class="stat">
+                <fa-icon [icon]="['fas', 'eye']"> </fa-icon>
+                <span> 500</span>
+              </span>
+              <span class="stat">
+                <fa-icon [icon]="['fas', 'thumbs-up']"></fa-icon>
+                <span>351</span>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12 post__card">
         <a class="post__create" [routerLink]="['/post/editor']">

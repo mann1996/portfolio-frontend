@@ -24,7 +24,7 @@ export class EditProfileComponent implements OnInit {
   profileModel: ProfileModel;
   status: string = '';
   userId: string;
-  imgSrc: string;
+  imgSrc: string = '';
   selectedImage: any = null;
   constructor(
     private fb: FormBuilder,
