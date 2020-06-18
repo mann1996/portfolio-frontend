@@ -9,7 +9,7 @@ import { FileUploadService } from '../service/file-upload.service';
 import { PostRequestModel } from '../model/post-request.model';
 import { UserService } from '../service/user.service';
 import { PostService } from '../service/post.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostResponseModel } from '../model/post-response.model';
 
 @Component({
@@ -28,7 +28,8 @@ export class PostEditorComponent implements OnInit {
     private fileUpload: FileUploadService,
     private userService: UserService,
     private postService: PostService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -58,10 +59,6 @@ export class PostEditorComponent implements OnInit {
               class: List,
               inlineToolbar: true,
             },
-            link: {
-              class: Link,
-              inlineToolbar: true,
-            },
             image: {
               class: Image,
               config: {
@@ -80,7 +77,17 @@ export class PostEditorComponent implements OnInit {
                 },
               },
             },
-            embed: Embed,
+            embed: {
+              class: Embed,
+              inlineToolbar: true,
+              config: {
+                services: {
+                  youtube: true,
+                  twitter: true,
+                  instagram: true,
+                },
+              },
+            },
           },
           data: data,
         });
@@ -95,10 +102,6 @@ export class PostEditorComponent implements OnInit {
           },
           list: {
             class: List,
-            inlineToolbar: true,
-          },
-          link: {
-            class: Link,
             inlineToolbar: true,
           },
           image: {
@@ -119,7 +122,17 @@ export class PostEditorComponent implements OnInit {
               },
             },
           },
-          embed: Embed,
+          embed: {
+            class: Embed,
+            inlineToolbar: true,
+            config: {
+              services: {
+                youtube: true,
+                twitter: true,
+                instagram: true,
+              },
+            },
+          },
         },
       });
   }
@@ -149,7 +162,9 @@ export class PostEditorComponent implements OnInit {
 
           this.postService
             .savePost(this.postModel, this.currentPost.id)
-            .subscribe((id) => console.log(id));
+            .subscribe((id) =>
+              this.router.navigate(['profile/' + this.userService.getUserId()])
+            );
         } else {
           this.status = 'Please enter post description';
         }

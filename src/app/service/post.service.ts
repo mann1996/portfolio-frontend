@@ -16,12 +16,38 @@ export class PostService {
   }
 
   findPost(id: number): Observable<PostResponseModel> {
-    return this.http.get<PostResponseModel>(this.hostUrl + id);
+    return this.http.get<PostResponseModel>(this.hostUrl + 'view/' + id);
   }
 
   findPublicPostsByUser(userId: String): Observable<PostResponseModel[]> {
     return this.http.get<PostResponseModel[]>(
       this.hostUrl + 'user/' + userId + '/public'
     );
+  }
+
+  deletePost(id: number) {
+    return this.http.delete(this.hostUrl + 'delete/' + id);
+  }
+
+  findPublicPosts(): Observable<PostResponseModel[]> {
+    return this.http.get<PostResponseModel[]>(this.hostUrl);
+  }
+
+  toggleLike(id: number): Observable<number> {
+    return this.http.get<number>(this.hostUrl + 'toggle/like/' + id);
+  }
+
+  addView(id: number): Observable<number> {
+    return this.http.get<number>(this.hostUrl + 'add/view/' + id);
+  }
+
+  searchPost(key: string): Observable<PostResponseModel[]> {
+    return this.http.get<PostResponseModel[]>(
+      this.hostUrl + 'search?key=' + key
+    );
+  }
+
+  findBySubscription(): Observable<PostResponseModel[]> {
+    return this.http.get<PostResponseModel[]>(this.hostUrl + 'subscription');
   }
 }

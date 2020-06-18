@@ -103,10 +103,7 @@ header {
       width: 2.5rem;
       margin-left: 1rem;
       background-size: cover;
-      img {
-        width: 100%;
-        background-size: cover;
-      }
+      background-position: center;
     }
     .navbar__dropdown__menu_active {
       opacity: 1 !important;
@@ -138,12 +135,8 @@ header {
           height: 4rem;
           overflow: hidden;
           border-radius: 50%;
-
+          background-position: center;
           background-size: cover;
-          img {
-            width: 100%;
-            background-size: cover;
-          }
         }
         .user_details {
           margin-left: 1rem;

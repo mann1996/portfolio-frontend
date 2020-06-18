@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ProfileModel } from '../model/profile.model';
 import { UserService } from '../service/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,6 +14,8 @@ export class ProfileComponent implements OnInit {
   userProfile: ProfileModel = new ProfileModel();
   following: boolean = false;
   publicPosts: PostResponseModel[] = [];
+  likes: number = 0;
+  views: number = 0;
   constructor(
     private userService: UserService,
     private postService: PostService,
@@ -25,10 +27,20 @@ export class ProfileComponent implements OnInit {
     let userId = this.route.snapshot.paramMap.get('userId');
     this.userService.getUserProfile(userId).subscribe((response) => {
       this.userProfile = response;
-      this.postService
-        .findPublicPostsByUser(userId)
-        .subscribe((posts) => (this.publicPosts = posts));
+      this.postService.findPublicPostsByUser(userId).subscribe((posts) => {
+        this.publicPosts = posts;
+        this.likes = this.calculateLikes();
+        this.views = this.calculateViews();
+      });
     });
+  }
+
+  deletePost(post: PostResponseModel) {
+    if (confirm('Are you sure?'))
+      this.postService.deletePost(post.id).subscribe((success) => {
+        let index = this.publicPosts.indexOf(post);
+        this.publicPosts.splice(index, 1);
+      });
   }
 
   toggleFollow(event) {
@@ -41,5 +53,21 @@ export class ProfileComponent implements OnInit {
         else this.userProfile.followers -= 1;
       });
     }
+  }
+
+  calculateLikes() {
+    let likes: number = 0;
+    this.publicPosts.forEach((post) => {
+      likes += post.likes;
+    });
+    return likes;
+  }
+
+  calculateViews() {
+    let views: number = 0;
+    this.publicPosts.forEach((post) => {
+      views += post.views;
+    });
+    return views;
   }
 }

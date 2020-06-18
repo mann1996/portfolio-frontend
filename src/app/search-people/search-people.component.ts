@@ -10,19 +10,31 @@ import { ProfileModel } from '../model/profile.model';
 })
 export class SearchPeopleComponent implements OnInit {
   profileList: ProfileModel[];
-  imgUrl = '../../assets/images/profile.jpg';
+  loggedIn: ProfileModel;
   constructor(private userService: UserService, private data: DataService) {}
 
   ngOnInit(): void {
     this.data.currentKey.subscribe((key) => {
       this.search(key);
     });
+    if (this.userService.loggedIn())
+      this.data.currentProfile.subscribe(
+        (profile) => (this.loggedIn = profile)
+      );
   }
 
-  search(key) {
+  search(key: string) {
     if (key.length > 0)
       this.userService
         .searchUser(key)
         .subscribe((profiles) => (this.profileList = profiles));
+  }
+
+  toggleFollow(user: ProfileModel) {
+    if (this.userService.loggedIn) {
+      this.userService.toggleFollow(user.publicId).subscribe((success) => {
+        user.followingStatus = !user.followingStatus;
+      });
+    }
   }
 }

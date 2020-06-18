@@ -1,5 +1,5 @@
 <div class="flex__container">
-  <div class="sidebar">
+  <div class="sidebar box__container">
     <div class="profile__intro">
       <div
         class="profile__img"
@@ -59,13 +59,13 @@
 
     <div class="user__info">
       <table>
-        <tr>
+        <tr *ngIf="views > 0">
           <td class="user__info__stat">Views</td>
-          <td class="user__info__stat_value">27,403</td>
+          <td class="user__info__stat_value">{{ views }}</td>
         </tr>
-        <tr>
+        <tr *ngIf="likes > 0">
           <td class="user__info__stat">Likes</td>
-          <td class="user__info__stat_value">5,309</td>
+          <td class="user__info__stat_value">{{ likes }}</td>
         </tr>
         <tr *ngIf="userProfile.followers > 0">
           <td class="user__info__stat">Followers</td>
@@ -172,28 +172,46 @@
           class="post__card__thumbnail"
           [ngStyle]="{ 'background-image': 'url(' + post.thumbnail + ')' }"
         >
-          <a href="#" class="post__action action__edit">Edit Post</a>
-          <button class="post__action action__delete">Delete Post</button>
+          <a
+            href="#"
+            [routerLink]="['/post/editor']"
+            [queryParams]="{ id: post.id }"
+            class="post__action action__edit"
+            >Edit Post</a
+          >
+          <button
+            class="post__action action__delete"
+            (click)="deletePost(post)"
+          >
+            Delete Post
+          </button>
 
           <div class="post__card__details">
             <div class="post__card__details_info">
-              <a href="#" class="info__title">Title</a>
-              <a href="#" class="info__author">author</a>
+              <a
+                href="#"
+                routerLink="/posts/{{ post.id }}"
+                class="info__title"
+                >{{ post.title }}</a
+              >
             </div>
             <div class="post__card__details_stats">
               <span class="stat">
                 <fa-icon [icon]="['fas', 'eye']"> </fa-icon>
-                <span> 500</span>
+                <span>{{ post.views }}</span>
               </span>
               <span class="stat">
                 <fa-icon [icon]="['fas', 'thumbs-up']"></fa-icon>
-                <span>351</span>
+                <span>{{ post.likes }}</span>
               </span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12 post__card">
+      <div
+        class="col col-lg-4 col-md-6 col-sm-12 col-xs-12 post__card"
+        *ngIf="userProfile.valid"
+      >
         <a class="post__create" [routerLink]="['/post/editor']">
           <div class="plus_icon">
             <fa-icon [icon]="['far', 'plus-square']"></fa-icon>

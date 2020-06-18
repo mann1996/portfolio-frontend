@@ -23,6 +23,6 @@ export class ProfileModel {
   followingStatus: boolean;
   followers: number;
   following: number;
-  thumbnail: string;
+  thumbnail: string = '';
   user: UserResponseModel;
 }

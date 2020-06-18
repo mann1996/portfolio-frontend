@@ -20,7 +20,7 @@
           Discover
         </a>
       </li>
-      <li>
+      <li *ngIf="loggedInUser">
         <a
           href="#"
           routerLink="/for-you"
@@ -35,8 +35,7 @@
       </li>
       <li *ngIf="loggedInUser">
         <a
-          href="#"
-          routerLink="/profile/{{ loggedInUser }}"
+          href="/profile/{{ loggedInUser }}"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >

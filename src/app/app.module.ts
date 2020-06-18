@@ -51,6 +51,8 @@ import { SearchPeopleComponent } from './search-people/search-people.component';
 import { DataService } from './service/data.service';
 import { PostEditorComponent } from './post-editor/post-editor.component';
 import { FileUploadService } from './service/file-upload.service';
+import { PostComponent } from './post/post.component';
+import { UrlSanitizerPipe } from './url-sanitizer.pipe';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { FileUploadService } from './service/file-upload.service';
     SearchPostComponent,
     SearchPeopleComponent,
     PostEditorComponent,
+    PostComponent,
+    UrlSanitizerPipe,
   ],
   imports: [
     BrowserModule,

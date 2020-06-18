@@ -11,6 +11,7 @@ import { SearchComponent } from './search/search.component';
 import { SearchPostComponent } from './search-post/search-post.component';
 import { SearchPeopleComponent } from './search-people/search-people.component';
 import { PostEditorComponent } from './post-editor/post-editor.component';
+import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
   { path: '', component: DiscoverComponent },
@@ -24,7 +25,12 @@ const routes: Routes = [
       { path: 'people', component: SearchPeopleComponent },
     ],
   },
-  { path: 'post/editor', component: PostEditorComponent },
+  { path: 'posts/:id', component: PostComponent },
+  {
+    path: 'post/editor',
+    component: PostEditorComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'profile/:userId/edit',
     component: EditProfileComponent,
