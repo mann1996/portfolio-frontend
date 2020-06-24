@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   publicPosts: PostResponseModel[] = [];
   likes: number = 0;
   views: number = 0;
+  loggedIn: string = '';
   constructor(
     private userService: UserService,
     private postService: PostService,
@@ -24,6 +25,9 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.userService.loggedIn()) {
+      this.loggedIn = this.userService.getUserId();
+    }
     let userId = this.route.snapshot.paramMap.get('userId');
     this.userService.getUserProfile(userId).subscribe((response) => {
       this.userProfile = response;
@@ -45,14 +49,14 @@ export class ProfileComponent implements OnInit {
 
   toggleFollow(event) {
     event.preventDefault();
-    if (this.userService.loggedIn) {
+    if (this.userService.loggedIn()) {
       let userid = this.route.snapshot.paramMap.get('userId');
       this.userService.toggleFollow(userid).subscribe((success) => {
         this.userProfile.followingStatus = !this.userProfile.followingStatus;
         if (this.userProfile.followingStatus) this.userProfile.followers += 1;
         else this.userProfile.followers -= 1;
       });
-    }
+    } else alert('Please sign in to follow this user.');
   }
 
   calculateLikes() {

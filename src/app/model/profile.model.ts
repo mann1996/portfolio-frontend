@@ -1,5 +1,4 @@
 import { UserResponseModel } from './user-response.model';
-import { CityModel } from './city.model';
 import { NumberSymbol } from '@angular/common';
 
 export class ProfileModel {

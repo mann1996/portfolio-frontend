@@ -9,8 +9,8 @@ import { ProfileModel } from '../model/profile.model';
   styleUrls: ['./search-people.component.scss'],
 })
 export class SearchPeopleComponent implements OnInit {
-  profileList: ProfileModel[];
-  loggedIn: ProfileModel;
+  profileList: ProfileModel[] = [];
+  loggedIn: ProfileModel = new ProfileModel();
   constructor(private userService: UserService, private data: DataService) {}
 
   ngOnInit(): void {
@@ -31,10 +31,12 @@ export class SearchPeopleComponent implements OnInit {
   }
 
   toggleFollow(user: ProfileModel) {
-    if (this.userService.loggedIn) {
+    if (this.userService.loggedIn()) {
       this.userService.toggleFollow(user.publicId).subscribe((success) => {
         user.followingStatus = !user.followingStatus;
       });
+    } else {
+      alert('Please sign in to follow this user.');
     }
   }
 }

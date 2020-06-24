@@ -145,7 +145,7 @@
     <div class="user__about" *ngIf="userProfile.customSectionContent">
       <div class="user__about__title">{{ userProfile.customSectionTitle }}</div>
       <div class="user__about__content">
-        {{ userProfile.customSectionContent }}
+        <pre>{{ userProfile.customSectionContent }}</pre>
       </div>
     </div>
     <div class="user__join_date" *ngIf="userProfile.joinedOn">
@@ -171,17 +171,68 @@
         <div
           class="post__card__thumbnail"
           [ngStyle]="{ 'background-image': 'url(' + post.thumbnail + ')' }"
+          *ngIf="post.isPublic"
         >
+          <div *ngIf="!post.isPublic" class="private__icon">
+            <fa-icon [icon]="['fas', 'lock']"></fa-icon> Private
+          </div>
           <a
             href="#"
             [routerLink]="['/post/editor']"
             [queryParams]="{ id: post.id }"
             class="post__action action__edit"
+            *ngIf="userProfile.valid"
             >Edit Post</a
           >
           <button
             class="post__action action__delete"
             (click)="deletePost(post)"
+            *ngIf="userProfile.valid"
+          >
+            Delete Post
+          </button>
+
+          <div class="post__card__details">
+            <div class="post__card__details_info">
+              <a
+                href="#"
+                routerLink="/posts/{{ post.id }}"
+                class="info__title"
+                >{{ post.title }}</a
+              >
+            </div>
+            <div class="post__card__details_stats">
+              <span class="stat">
+                <fa-icon [icon]="['fas', 'eye']"> </fa-icon>
+                <span>{{ post.views }}</span>
+              </span>
+              <span class="stat">
+                <fa-icon [icon]="['fas', 'thumbs-up']"></fa-icon>
+                <span>{{ post.likes }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="post__card__thumbnail"
+          [ngStyle]="{ 'background-image': 'url(' + post.thumbnail + ')' }"
+          *ngIf="!post.isPublic && post.createdBy.publicId == loggedIn"
+        >
+          <div *ngIf="!post.isPublic" class="private__icon">
+            <fa-icon [icon]="['fas', 'lock']"></fa-icon> Private
+          </div>
+          <a
+            href="#"
+            [routerLink]="['/post/editor']"
+            [queryParams]="{ id: post.id }"
+            class="post__action action__edit"
+            *ngIf="userProfile.valid"
+            >Edit Post</a
+          >
+          <button
+            class="post__action action__delete"
+            (click)="deletePost(post)"
+            *ngIf="userProfile.valid"
           >
             Delete Post
           </button>

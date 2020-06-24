@@ -13,6 +13,7 @@ import {
   faMapMarkerAlt,
   faThumbsUp,
   faEye,
+  faLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -42,7 +43,6 @@ import { UserService } from './service/user.service';
 import { AuthGuard } from './Guards/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { LocationService } from './service/location.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SearchComponent } from './search/search.component';
@@ -84,7 +84,6 @@ import { UrlSanitizerPipe } from './url-sanitizer.pipe';
     FormBuilder,
     UserService,
     FileUploadService,
-    LocationService,
     DataService,
     AuthGuard,
     {
@@ -112,7 +111,8 @@ export class AppModule {
       faTelegram,
       faThumbsUp,
       faEye,
-      faPlusSquare
+      faPlusSquare,
+      faLock
     );
   }
 }

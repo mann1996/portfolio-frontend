@@ -1,5 +1,19 @@
 <div class="post__container box__container">
-  <div class="post__header">{{ post.title }}</div>
+  <div class="post__header">
+    <span class="title">{{ post.title }}</span>
+    <span class="date" *ngIf="post.createdAt">
+      {{
+        post.createdAt[0] +
+          " " +
+          post.createdAt[1] +
+          ", " +
+          " " +
+          post.createdAt[2]
+          | date: "MMMM d, y"
+          | uppercase
+      }}
+    </span>
+  </div>
   <div class="post__body">
     <div class="post__body__content">
       <div class="post__content__block" *ngFor="let block of postContents">
@@ -94,6 +108,52 @@
             </span>
             <span> {{ post.likes }}</span>
           </button>
+        </div>
+      </div>
+      <div class="post__comment_section">
+        <div class="total_comments">
+          <span>Total Comments:</span> {{ postComments.length }}
+        </div>
+        <div class="comment__form">
+          <textarea cols="30" rows="2" [(ngModel)]="content"></textarea>
+          <button (click)="postComment()" [disabled]="content.length <= 0">
+            Post
+          </button>
+        </div>
+        <div class="comment__list" *ngIf="postComments.length > 0">
+          <div class="comment" *ngFor="let comment of postComments">
+            <div class="user__info">
+              <div
+                class="user__thumbnail"
+                [ngStyle]="{
+                  'background-image': 'url(' + comment.createdBy.thumbnail + ')'
+                }"
+              ></div>
+              <div class="details">
+                <a href="#" class="name"
+                  >{{ comment.createdBy.firstName }}
+                  <span *ngIf="comment.createdBy.lastName">{{
+                    " " + comment.createdBy.lastName
+                  }}</span></a
+                >
+                <div class="date">
+                  {{
+                    comment.createdAt[0] +
+                      " " +
+                      comment.createdAt[1] +
+                      ", " +
+                      " " +
+                      comment.createdAt[2]
+                      | date: "MMMM d, y"
+                      | uppercase
+                  }}
+                </div>
+              </div>
+            </div>
+            <div class="comment_content">
+              {{ comment.content }}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -34,7 +34,6 @@ export class PostEditorComponent implements OnInit {
 
   ngOnInit(): void {
     var fu = this.fileUpload;
-
     let id = 0;
     this.route.queryParams.subscribe((params) => {
       if (params['id']) id = params['id'];
@@ -43,6 +42,11 @@ export class PostEditorComponent implements OnInit {
     if (id > 0) {
       this.postService.findPost(id).subscribe((post) => {
         this.currentPost = post;
+        if (
+          this.currentPost.createdBy.publicId != this.userService.getUserId()
+        ) {
+          this.router.navigate(['/']);
+        }
         this.postModel.content = this.currentPost.content;
         this.postModel.isPublic = this.currentPost.isPublic;
         this.postModel.thumbnail = this.imgSrc = this.currentPost.thumbnail;

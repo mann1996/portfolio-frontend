@@ -12,6 +12,7 @@ import { SearchPostComponent } from './search-post/search-post.component';
 import { SearchPeopleComponent } from './search-people/search-people.component';
 import { PostEditorComponent } from './post-editor/post-editor.component';
 import { PostComponent } from './post/post.component';
+import { PostGuard } from './Guards/post.guard';
 
 const routes: Routes = [
   { path: '', component: DiscoverComponent },

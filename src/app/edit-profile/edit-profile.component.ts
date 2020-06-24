@@ -9,7 +9,6 @@ import { ProfileModel } from '../model/profile.model';
 import { UserService } from '../service/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime, map, finalize } from 'rxjs/operators';
-import { CountryModel } from '../model/country.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { DataService } from '../service/data.service';
 import { FileUploadService } from '../service/file-upload.service';
